@@ -93,7 +93,6 @@ export class App extends Component {
       modalVisible,
       loaderVisible,
     } = this.state;
-    console.log(modalData);
     const totalPages = Math.ceil(totalResult / searchResults.length);
     return (
       <div
