@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Form, Field } from 'formik';
 
 export const Header = styled.header`
   top: 0;
@@ -19,7 +20,7 @@ export const Header = styled.header`
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
-export const Form = styled.form`
+export const FormWrapper = styled(Form)`
   display: flex;
   align-items: center;
   width: 100%;
@@ -34,7 +35,7 @@ export const Button = styled.button`
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('./searchLogo');
+  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
   background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
@@ -44,10 +45,18 @@ export const Button = styled.button`
   outline: none;
   :hover {
     opacity: 1;
+    svg {
+      scale: 1.1;
+    }
+  }
+  svg {
+    width: 25px;
+    height: 25px;
+    transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;
 
-export const Label = styled.label`
+export const Label = styled.span`
   position: absolute;
   width: 1px;
   height: 1px;
@@ -59,7 +68,7 @@ export const Label = styled.label`
   border: 0;
 `;
 
-export const Input = styled.input`
+export const Input = styled(Field)`
   display: inline-block;
   width: 100%;
   font: inherit;

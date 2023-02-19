@@ -1,20 +1,40 @@
-import { Header, Form, Button, Label, Input } from './Searchbar.styled';
+import PropTypes from 'prop-types';
+import { Header, FormWrapper, Button, Label, Input } from './Searchbar.styled';
+import { BiSearch } from 'react-icons/bi';
+import { Formik } from 'formik';
+const initialValues = {
+  search: '',
+};
 
-export const Searchbar = () => {
+export const Searchbar = ({ onSubmit }) => {
+  const submitSearch = (value, { resetForm }) => {
+    if (value.search) {
+      onSubmit(value.search);
+      resetForm();
+    }
+  };
   return (
     <Header>
-      <Form>
-        <Button type="submit">
-          <Label>Search</Label>
-        </Button>
+      <Formik initialValues={initialValues} onSubmit={submitSearch}>
+        <FormWrapper>
+          <Button type="submit">
+            <BiSearch />
+            <Label>Search</Label>
+          </Button>
 
-        <Input
-          type="text"
-          autocomplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-      </Form>
+          <Input
+            name="search"
+            type="text"
+            autoComplete="true"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+        </FormWrapper>
+      </Formik>
     </Header>
   );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };

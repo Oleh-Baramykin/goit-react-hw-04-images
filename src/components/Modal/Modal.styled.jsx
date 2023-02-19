@@ -4,8 +4,9 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100%;
+  overflow-y: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,6 +15,6 @@ export const Overlay = styled.div`
 `;
 
 export const ModalBox = styled.div`
-  max-width: calc(100vw - 48px);
+  position: absolute;
   max-height: calc(100vh - 24px);
 `;
