@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Header, FormWrapper, Button, Label, Input } from './Searchbar.styled';
 import { BiSearch } from 'react-icons/bi';
@@ -11,6 +12,8 @@ export const Searchbar = ({ onSubmit }) => {
     if (value.search) {
       onSubmit(value.search);
       resetForm();
+    } else if (value.search === '') {
+      toast.error('Write what image you want to find');
     }
   };
   return (
