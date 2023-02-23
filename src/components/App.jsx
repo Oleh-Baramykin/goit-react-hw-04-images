@@ -30,20 +30,6 @@ export class App extends Component {
     }
   }
 
-  fetchRes = async () => {
-    const response = await fetchApi(
-      this.state.searchName,
-      this.state.currentPage
-    );
-    this.setState({ totalResult: response.totalHits });
-    if (this.state.currentPage === 1) {
-      response.totalHits === 0
-        ? toast.error("Sorry, we didn't find anything")
-        : toast.success(`great, we found ${response.totalHits} images`);
-    }
-    return response;
-  };
-
   findImage = word => {
     if (this.state.searchName !== word) {
       this.setState({ searchName: word, currentPage: 1, searchResults: [] });
@@ -72,9 +58,16 @@ export class App extends Component {
   };
 
   getImage = async () => {
+    const { searchName, currentPage } = this.state;
     try {
       this.setState({ loaderVisible: true });
-      const response = await this.fetchRes();
+      const response = await fetchApi(searchName, currentPage);
+      this.setState({ totalResult: response.totalHits });
+      if (currentPage === 1) {
+        response.totalHits === 0
+          ? toast.error("Sorry, we didn't find anything")
+          : toast.success(`great, we found ${response.totalHits} images`);
+      }
       this.setState(prevState => ({
         searchResults: [...prevState.searchResults, ...response.hits],
       }));
@@ -93,22 +86,19 @@ export class App extends Component {
       modalVisible,
       loaderVisible,
     } = this.state;
-
+    const { findImage, togleModal, onImageClick, loadMoreClick } = this;
     const totalPages = Math.ceil(totalResult / searchResults.length);
 
     return (
       <GlobStyle>
-        <Searchbar onSubmit={this.findImage} />
+        <Searchbar onSubmit={findImage} />
         {modalVisible && (
-          <Modal dataImage={modalData} closeModal={this.togleModal} />
+          <Modal dataImage={modalData} closeModal={togleModal} />
         )}
-        <ImageGallery
-          searchResults={searchResults}
-          lookBigImg={this.onImageClick}
-        />
+        <ImageGallery searchResults={searchResults} lookBigImg={onImageClick} />
         {loaderVisible && <Loader />}
         {searchResults.length !== 0 && totalPages !== 1 && (
-          <Button onClick={this.loadMoreClick} />
+          <Button onClick={loadMoreClick} />
         )}
         <ToastContainer autoClose={3000} />
         <CoolPage />
