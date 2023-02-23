@@ -9,13 +9,14 @@ const initialValues = {
 
 export const Searchbar = ({ onSubmit }) => {
   const submitSearch = (value, { resetForm }) => {
-    if (value.search) {
-      onSubmit(value.search);
-      resetForm();
-    } else if (value.search === '') {
-      toast.error('Write what image you want to find');
+    if (value.search.trim() === '') {
+      toast.error('Write, what do you want to find');
+      return;
     }
+    onSubmit(value.search);
+    resetForm();
   };
+
   return (
     <Header>
       <Formik initialValues={initialValues} onSubmit={submitSearch}>
@@ -24,7 +25,6 @@ export const Searchbar = ({ onSubmit }) => {
             <BiSearch />
             <Label>Search</Label>
           </Button>
-
           <Input
             name="search"
             type="text"

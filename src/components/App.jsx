@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GlobStyle } from './App.styled';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Loader } from './Loader/Loader';
 import { CoolPage } from './ScrollToTop/ScrollToTop';
@@ -44,7 +45,6 @@ export class App extends Component {
   };
 
   findImage = word => {
-    this.setState({ error: false });
     if (this.state.searchName !== word) {
       this.setState({ searchName: word, currentPage: 1, searchResults: [] });
     }
@@ -97,14 +97,7 @@ export class App extends Component {
     const totalPages = Math.ceil(totalResult / searchResults.length);
 
     return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          gridGap: '16px',
-          paddingBottom: '24px',
-        }}
-      >
+      <GlobStyle>
         <Searchbar onSubmit={this.findImage} />
         {modalVisible && (
           <Modal dataImage={modalData} closeModal={this.togleModal} />
@@ -119,7 +112,7 @@ export class App extends Component {
         )}
         <ToastContainer autoClose={3000} />
         <CoolPage />
-      </div>
+      </GlobStyle>
     );
   }
 }
